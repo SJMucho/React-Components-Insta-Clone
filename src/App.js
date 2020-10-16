@@ -6,19 +6,33 @@
 
 // Import the state hook
 import React, { useState } from 'react'
-import '../Posts'
-import '../components/SearchBar'
+import Posts from './components/Posts/Posts'
+import SearchBar from './components/SearchBar/SearchBar'
 // Import the Posts (plural!) and SearchBar components, since they are used inside App component
 // Import the dummyData
-import './dummy-data'
+import dummyData from './dummy-data'
 import './App.css';
 
 const App = () => {
+
+ 
+  const [posts, setPosts] = useState(dummyData)
   // Create a state called `posts` to hold the array of post objects, **initializing to dummyData**.
   // This state is the source of truth for the data inside the app. You won't be needing dummyData anymore.
   // To make the search bar work (which is stretch) we'd need another state to hold the search term.
 
   const likePost = postId => {
+      const [data] = setPosts();
+
+      return (
+        <div className="likes-container-wrapper">
+          {data.map((obj) => (
+            <Posts key={obj.id} propsFromParent={obj} />
+          ))}
+        </div>
+      );
+    };
+
     /*
       This function serves the purpose of increasing the number of likes by one, of the post with a given id.
 
@@ -34,10 +48,11 @@ const App = () => {
 
   return (
     <div className='App'>
-      {/* Add SearchBar and Posts here to render them */}
-      {/* Check the implementation of each component, to see what props they require, if any! */}
+       
+      {<div>{SearchBar}</div>
+      <div>{/* Check the implementation of each component, to see what props they require, if any! */}</div>
     </div>
   );
-};
+
 
 export default App;
